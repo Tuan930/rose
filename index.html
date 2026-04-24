@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>送你一朵玫瑰🌹</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+    canvas {
+      display: block;
+    }
+    .text {
+      position: absolute;
+      bottom: 20px;
+      color: #ff6b99;
+      font-size: 18px;
+      text-align: center;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="rose"></canvas>
+  <div class="text">送你一朵永不凋谢的玫瑰 ❤️</div>
+
+  <script>
+    const canvas = document.getElementById('rose');
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function drawRose() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      const scale = Math.min(canvas.width, canvas.height) * 0.4;
+
+      ctx.beginPath();
+      for (let i = 0; i < 720; i++) {
+        const t = (i * Math.PI) / 180;
+        // 玫瑰线公式: r = a * sin(n*t)
+        const n = 4; // 花瓣数量控制（偶数 → 2n 片）
+        const r = scale * Math.sin(n * t);
+        const x = centerX + r * Math.cos(t);
+        const y = centerY + r * Math.sin(t);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = '#ff3366';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    drawRose();
+  </script>
+</body>
+</html>
